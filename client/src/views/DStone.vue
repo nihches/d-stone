@@ -9,9 +9,9 @@
   <div class="statsUnderTop">14403NAV | 434DC</div>
   <div class="sideMeni" id="" v-show="sMeni">
     <div class="rBtns">
-      <div class="rouBtn">1</div>
-      <div class="rouBtn">2</div>
-      <div class="rouBtn">3</div>
+      <div class="rouBtn">Game</div>
+      <div class="rouBtn">Market</div>
+      <div class="rouBtn">Leatherboard</div>
     </div>
     <div>Search</div>
     <div class="mItem" v-for="i in fragments" @click="showContent(i.id)"> {{ i.name }}</div>

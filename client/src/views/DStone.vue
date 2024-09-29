@@ -3,7 +3,7 @@
 <template>
   <div class="top">
     <div class="topNavBtn" id="iMeni" @click="showMeni()">{{ meni }}</div>
-    <div class="topNavBtn">{{ user }}</div>
+    <div class="topNavBtn" @click="showProfil()" >{{ user }}</div>
     <div class="topNavBtn">Search</div>
   </div>
   <div class="statsUnderTop">14403NAV | 434DC</div>
@@ -14,9 +14,23 @@
       <div class="rouBtn">3</div>
     </div>
     <div>Search</div>
-    <div class="mItem" v-for="i in authM"> {{ i.name }}</div>
+    <div class="mItem" v-for="i in fragments" @click="showContent(i.id)"> {{ i.name }}</div>
   </div>
-  <div class="content"></div>
+  <div class="cnt">
+    <div v-for="c in fragments[sContentId].content">
+      <div class="itemContent">
+        <div class="itIcon">image</div>
+        <div v-if="fragments[0].content.every(st => st.name === fragments[sContentId].content[c.id].name)">
+  	      <div class="itBtn">Open</div>
+        </div>
+        <div v-else>
+          <div class="itBtn">Buy</div>
+        </div>
+        <div class="itName">{{ c.name }}</div>
+        <div class="itAuthor">{{ c.author }}</div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -27,22 +41,59 @@ export default {
       user: 'Nihche',
 
       sMeni: false,
-      authM: [
-        {id: 0, name: 'Profile'},
-        {id: 1, name: 'Tutorials'},
-        {id: 2, name: 'D-Stone'}
-      ]
+      fragments: [
+        {id: 0, name: 'Profile', content: [{id:0, author: "Nihche", name:"DStone01"}]},
+        {id: 1, name: 'Tutorials', content: []},
+        {id: 2, name: 'D-Stone', content: [{id:0, author: "Nihche", name:"DStone 00"},{id:1, author: "Nihche", name:"DStone01"},{id:2, author: "Nihche", name:"DStone 02"},{id:3, author: "Nihche", name:"DStone 03"}]}
+      ],
+
+      sContentId: 0
+
     }
   },
   methods: {
     showMeni: function(){
       this.sMeni = !this.sMeni
+    },
+    showProfil: function(){
+      this.sContentId = 0
+    },
+    showContent: function(id){
+      this.sContentId = id
+      this.showMeni()
     }
   }
 }
 </script>
 
 <style scoped>
+.itBtn{
+  display: flex;
+  justify-content: center;
+  background-color: green;
+  border-radius: 2em;
+  width: 4em;
+
+}
+.cnt{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 2em;
+}
+.itemContent{
+  background-color: white;
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+  margin-top: 0.8em;
+
+}
 .rBtns{
   display: flex;
   flex-direction: row;
@@ -89,9 +140,9 @@ export default {
 }
 .sideMeni{
   background-color: gray;
-  height: 99vh;
-  width: 80vw;
-  margin-top: 1vh;
+  height: 97vh;
+  width: 98vw;
+  margin-top: 3vh;
   border-top-right-radius: 2em;
   z-index: 2;
 }

@@ -6,7 +6,7 @@
     <div class="topNavBtn" @click="showProfil()" >{{ user }}</div>
     <div class="topNavBtn">Search</div>
   </div>
-  <div class="statsUnderTop">14403NAV | 434DC</div>
+  <div class="statsUnderTop">{{nav}}NAV | {{cc}}CC</div>
   <div class="sideMeni" id="" v-show="sMeni">
     <div class="rBtns">
       <div class="rouBtn">Game</div>
@@ -20,14 +20,15 @@
     <div v-for="c in fragments[sContentId].content">
       <div class="itemContent">
         <div class="itIcon">image</div>
-        <div v-if="fragments[0].content.every(st => st.name === fragments[sContentId].content[c.id].name)">
+        <div v-if="fragments[0].content.some(st => st.name === fragments[sContentId].content[c.id].name)">
   	      <div class="itBtn">Open</div>
         </div>
         <div v-else>
-          <div class="itBtn">Buy</div>
+          <div class="itBtn" @click="buyContent(c.id)">Buy</div>
         </div>
         <div class="itName">{{ c.name }}</div>
         <div class="itAuthor">{{ c.author }}</div>
+        <div class="itAuthor">{{ c.id }}</div>
       </div>
     </div>
   </div>
@@ -39,12 +40,13 @@ export default {
     return{
       meni: 'Meni',
       user: 'Nihche',
-
+      cc: 11,
+      nav: 0,
       sMeni: false,
       fragments: [
-        {id: 0, name: 'Profile', content: [{id:0, author: "Nihche", name:"DStone01"}]},
+        {id: 0, name: 'Profile', content: [{id:0, author: "Nihche", name:"DStone00"}]},
         {id: 1, name: 'Tutorials', content: []},
-        {id: 2, name: 'D-Stone', content: [{id:0, author: "Nihche", name:"DStone 00"},{id:1, author: "Nihche", name:"DStone01"},{id:2, author: "Nihche", name:"DStone 02"},{id:3, author: "Nihche", name:"DStone 03"}]}
+        {id: 2, name: 'D-Stone', content: [{id:0, author: "Nihche", name:"DStone00"},{id:1, author: "Nihche", name:"DStone01"},{id:2, author: "Nihche", name:"DStone02"},{id:3, author: "Nihche", name:"DStone 03"}]}
       ],
 
       sContentId: 0
@@ -61,6 +63,16 @@ export default {
     showContent: function(id){
       this.sContentId = id
       this.showMeni()
+    },
+    buyContent: function(id){
+      if(this.cc >= 1){
+        this.cc--
+        let tId = this.fragments[0].content.length
+        let tAuthor = this.fragments[this.sContentId].content[id].author
+        let tName = this.fragments[this.sContentId].content[id].name
+        this.fragments[0].content.push({id: tId, author: tAuthor, name: tName})
+        console.log(this.fragments)
+      }
     }
   }
 }

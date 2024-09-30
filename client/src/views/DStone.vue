@@ -21,7 +21,7 @@
       <div class="itemContent">
         <div class="itIcon">image</div>
         <div v-if="fragments[0].content.some(st => st.name === fragments[sContentId].content[c.id].name)">
-  	      <div class="itBtn">Open</div>
+  	      <div class="itBtn" @click="openContent(c.id)">Open</div>
         </div>
         <div v-else>
           <div class="itBtn" @click="buyContent(c.id)">Buy</div>
@@ -73,6 +73,9 @@ export default {
         this.fragments[0].content.push({id: tId, author: tAuthor, name: tName})
         console.log(this.fragments)
       }
+    },
+    openContent: function(id){
+      window.open(`/` + this.fragments[this.sContentId].content[id].name + `.pdf`, '_blank')
     }
   }
 }

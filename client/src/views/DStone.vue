@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <div class="top">
@@ -9,15 +11,15 @@
   <div class="statsUnderTop">{{nav}}NAV | {{cc}}CC</div>
   <div class="sideMeni" id="" v-show="sMeni">
     <div class="rBtns">
-      <div class="rouBtn">Game</div>
+      <div class="rouBtn"><RouterLink to="/xText">Text</RouterLink></div>
       <div class="rouBtn">Market</div>
       <div class="rouBtn">Leatherboard</div>
     </div>
     <div>Search</div>
-    <div class="mItem" v-for="i in fragments" @click="showContent(i.id)"> {{ i.name }}</div>
+    <div class="mItem" v-for="i in fragments" @click="showContent(i.id)" :key="i.id"> {{ i.name }}</div>
   </div>
   <div class="cnt">
-    <div v-for="c in fragments[sContentId].content">
+    <div v-for="c in fragments[sContentId].content" :key="c.id">
       <div class="itemContent">
         <div class="itIcon">image</div>
         <div v-if="fragments[0].content.some(st => st.name === fragments[sContentId].content[c.id].name)">
@@ -32,6 +34,9 @@
       </div>
     </div>
   </div>
+  <div v-if="sText">
+    <iframe class="showCon" type="text/html" src="/DStone00.html" />
+  </div>
 </template>
 
 <script>
@@ -43,10 +48,11 @@ export default {
       cc: 11,
       nav: 0,
       sMeni: false,
+      sText: false,
       fragments: [
         {id: 0, name: 'Profile', content: [{id:0, author: "Nihche", name:"DStone00"}]},
         {id: 1, name: 'Tutorials', content: []},
-        {id: 2, name: 'D-Stone', content: [{id:0, author: "Nihche", name:"DStone00"},{id:1, author: "Nihche", name:"DStone01"},{id:2, author: "Nihche", name:"DStone02"},{id:3, author: "Nihche", name:"DStone 03"}]}
+        {id: 2, name: 'D-Stone', content: [{id:0, author: "Nihche", name:"DStone00"},{id:1, author: "Nihche", name:"DStone01"},{id:2, author: "Nihche", name:"DStone02"},{id:3, author: "Nihche", name:"DStone03"}]}
       ],
 
       sContentId: 0
@@ -75,13 +81,23 @@ export default {
       }
     },
     openContent: function(id){
-      window.open(`/` + this.fragments[this.sContentId].content[id].name + `.pdf`, '_blank')
+      window.open(`/` + this.fragments[this.sContentId].content[id].name + `.pdf`)
     }
   }
 }
 </script>
 
 <style scoped>
+.showCon{
+  position: absolute;
+  top:3em;
+  background-color: gray;
+  height: 94vh;
+  width: 98vw;
+  left: 0.5vw;
+  outline: none;
+  overflow: auto;
+}
 .itBtn{
   display: flex;
   justify-content: center;

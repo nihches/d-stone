@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import xText from './xText.vue';
 </script>
 
 <template>
@@ -34,8 +35,15 @@ import { RouterLink } from 'vue-router'
       </div>
     </div>
   </div>
-  <div v-if="sText">
-    <iframe class="showCon" type="text/html" src="/DStone00.html" />
+  <div v-if="sText" class="cContent">
+    <xText></xText>
+    <div class="botBCon">
+        <div class="scBtn" @click="closeContent()">XClose</div>
+        <div class="nextLast">
+          <div class="" @click="prevContent()">Previous |</div>
+          <div class="" @click="nextContent()"> &nbsp; Next</div>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -81,20 +89,52 @@ export default {
       }
     },
     openContent: function(id){
-      window.open(`/` + this.fragments[this.sContentId].content[id].name + `.pdf`)
+      this.sText = true
+    },
+    closeContent: function(){
+      this.sText = false
+    },
+    nextContent: function(){
+      this.sText = false
+    },
+    prevContent: function(){
+      this.sText = false
     }
   }
 }
 </script>
 
 <style scoped>
+.botBCon{
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  bottom: 0em;
+}
+.scBtn{
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+.nextLast{
+  display: flex;
+  flex-direction:  row;
+}
+.cContent{
+  background: radial-gradient(#c4c4c4, #312e3a);
+  position: absolute;
+  top:5vh;
+  left: 5vw;
+  height: 90vh;
+  width: 90vw;
+  overflow: hidden;
+  border-radius: 4em;
+}
 .showCon{
   position: absolute;
-  top:3em;
+  top:5vh;
   background-color: gray;
-  height: 94vh;
-  width: 98vw;
-  left: 0.5vw;
+  height: 95vh;
+  width: 100vw;
   outline: none;
   overflow: auto;
 }

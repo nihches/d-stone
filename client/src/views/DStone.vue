@@ -24,7 +24,7 @@ import xText from './xText.vue';
       <div class="itemContent">
         <div class="itIcon">image</div>
         <div v-if="fragments[0].content.some(st => st.name === fragments[sContentId].content[c.id].name)">
-  	      <div class="itBtn" @click="openContent(c.id)">Open</div>
+  	      <div class="itBtn" @click="openContent(c.name)">Open</div>
         </div>
         <div v-else>
           <div class="itBtn" @click="buyContent(c.id)">Buy</div>
@@ -36,7 +36,11 @@ import xText from './xText.vue';
     </div>
   </div>
   <div v-if="sText" class="cContent">
-    <xText></xText>
+    <xText>
+      <template #title>{{ text[sTextId].title }}</template>
+      <template #author>{{ text[sTextId].author }}</template>
+      <template #text><p v-for="p in text[sTextId].content">&nbsp;{{ p }}</p></template>
+    </xText>
     <div class="botBCon">
         <div class="scBtn" @click="closeContent()">XClose</div>
         <div class="nextLast">
@@ -49,6 +53,10 @@ import xText from './xText.vue';
 
 <script>
 export default {
+  name: 'DStone',
+  components: {
+    xText
+  },
   data(){
     return{
       meni: 'Meni',
@@ -60,10 +68,37 @@ export default {
       fragments: [
         {id: 0, name: 'Profile', content: [{id:0, author: "Nihche", name:"DStone00"}]},
         {id: 1, name: 'Tutorials', content: []},
-        {id: 2, name: 'D-Stone', content: [{id:0, author: "Nihche", name:"DStone00"},{id:1, author: "Nihche", name:"DStone01"},{id:2, author: "Nihche", name:"DStone02"},{id:3, author: "Nihche", name:"DStone03"}]}
+        {id: 2, name: 'D-Stone', content: [{id:0, author: "Nihche", name:"DStone00"},{id:1, author: "Nihche", name:"DStone01"},{id:2, author: "Nihche", name:"DStone02"}]}
       ],
+      text: [{id:0, name: "DStone00", title: "The beginning of the endless and whole dstone", author: "Nihche", content: [
+            `Starting to write a story is really hard, that is why I always start in the middle, because I don’t mind how I write. But why do I write? That is the question that makes my brain tingle. It is not a pleasant thing to do, but I still do it.`,
+`I am searching for something, hidden deep in the unknown. And I have to find it, well at this point do I even have a choice? So much of it has already been written. `,
+`I must finish it, even if I decided that I won’t do it. Who am I to decide that? The ending is already set in stone. I can’t escape it, none of us can.`,
+`Stories commonly begin in the beginning, but I would like to start even before that. Going to the beginning of our universe, our reality, won’t be enough. We have to start before that. `,
+`We came from nothing and we will go back to nothing. That is the absolute end to our story.`,
+``
+        ]},
+        {id: 1, name: "DStone01", title: "What is nothing?", author: "Nihche", content: [
+            `I have a weird little obsession with the word nothing. I don’t really know when or how it happened. I guess there was a saying. “If you stare into the abyss, the abyss stares back at you.”`,
+`We associate the word nothing with emptiness, darkness or lack of something. But I am looking from the other perspective, I see this lack of something as potential.  `,
+`What I mean to say is that nothingness is the most immense potential of existence and is a primary infinity. Like a pot is molded out of clay, our reality is molded out of nothingness.`,
+`We could also look at nothingness mathematically. A number that could represent it already exists, and that is 0. That is why we can't divide with this number. And if we would put nothingness on a graph, it would be a line that infinity from functions comes close to but can never reach it.`,
+`And that is our meaning of life, our purpose, reaching for something we can never fully reach. Because this line 0 is our existence, experiencing itself.Are you ready to repeat every moment of your life for the rest of eternity?`
+        ]},
+        {id: 2, name: "DStone02", title: "Requiem for understanding", author: "Nihche", content: [
+          `WHY?`,
+          `This question is living rent free in the back of my mind. This  small void, that nothing can fill. The constant whisper of skepticism, that gives a feeling that nothing is really real.`,
+          `This feeling caused a series of unfortunate events, where I was shown infinity and omniscience. And now I have to live with it.`,
+          `The amount of information and their constant changing is too much for our brain. Even in simple day-to-day life, our brain has to simplify and fill in the missing information, so we can understand, or even comprehend our reality. I was made aware that our brain isn’t able to be omniscient.`,
+          `But that won’t stop me from trying.`,
+          `To achieve my goal, I will have to use a shortcut. I came to the conclusion, if omniscience is out of the question, I will just become all understanding. Same job, different title.`,
+          `Just as scientists are looking for an equation that solves everything. I am looking for a state of mind that understands everything. And to do that I will create a story like no other. A story of everything.`,
+          ``,
+        ]}
+    ],
 
-      sContentId: 0
+      sContentId: 0,
+      sTextId: 0
 
     }
   },
@@ -88,17 +123,18 @@ export default {
         console.log(this.fragments)
       }
     },
-    openContent: function(id){
+    openContent: function(name){
       this.sText = true
+      this.sTextId = this.text.find(txt => txt.name === name).id
     },
     closeContent: function(){
       this.sText = false
     },
     nextContent: function(){
-      this.sText = false
+
     },
     prevContent: function(){
-      this.sText = false
+
     }
   }
 }

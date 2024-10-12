@@ -105,6 +105,7 @@ export default {
   methods: {
     showMeni: function(){
       this.sMeni = !this.sMeni
+      this.sText = false
     },
     showProfil: function(){
       this.sContentId = 0
